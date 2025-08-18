@@ -15,4 +15,11 @@ class ProductProperties {
     getTotalValue() {
         return this.price * this.quantity;
     }
+        /**
+     * Returns a string representation of the product.
+     * @returns {string} A formatted string with product details.
+     */
+    toString() {
+        return `Product: ${this.name}, Price: $${this.price.toFixed(2)}, Quantity: ${this.quantity}`;
+    }
 }
