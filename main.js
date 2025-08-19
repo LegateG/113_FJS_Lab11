@@ -117,5 +117,15 @@ const soap = new ProductProperties("Soap", 2.00, 50);
 const milk = new PerishableProductProperties("Milk", 1.50, 40, "2025-09-15");
 const cheese = new PerishableProductProperties("Cheese", 5.00, 30, "2025-11-20");
 const oldYogurt = new PerishableProductProperties("Yogurt", 1.00, 20, "2024-03-15");
+// 2. Create a store and add the products
+const myStore = new Store();
+myStore.addProduct(apple);
+myStore.addProduct(laptop);
+myStore.addProduct(soap);
+myStore.addProduct(milk);
+myStore.addProduct(cheese);
+
+console.log("\n--- Inventory Loaded ---");
+myStore.inventory.forEach(p => console.log(p.toString()));
 // --- PART 5: Testing Script ---
 console.log("--- Initializing Inventory Management System ---");
