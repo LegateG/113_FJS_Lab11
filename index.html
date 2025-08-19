@@ -3,40 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 11 - Object-Oriented Programming with Classes</title>
+    <title>Inventory Management System Test</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="data:,">
+
 </head>
 <body>
-    <h1>Lab 11 - Object-Oriented Programming with Classes</h1>
-
+    <h1>Inventory Management System Test</h1>
     <div class="controls">
-        <button id="fetchBtn">Fetch Data with fetch()</button>
-        <button id="xhrBtn">Fetch Data with XHR</button>
+        <button id="runAllBtn">🚀 Run Full System Test</button>
+        <button id="clearBtn">🗑️ Clear Results</button>
+        <button id="testClassesBtn">🧪 Test Classes Only</button>
+        <button id="testStoreBtn">🏪 Test Store Operations</button>
     </div>
-
     <hr>
-
-    <div class="form-container">
-        <h2>Send/Update Data</h2>
-        <form id="postForm">
-            <input type="text" id="postTitle" placeholder="Enter post title" required>
-            <input type="text" id="postBody" placeholder="Enter post body" required>
-            <input type="number" id="postId" placeholder="Post ID (for UPDATE)">
-            <div class="form-buttons">
-                <button type="submit" id="postBtn">Create Post (POST)</button>
-                <button type="button" id="putBtn">Update Post (PUT)</button>
-            </div>
-        </form>
+    
+    <div class="test-section">
+        <h2>Test Status</h2>
+        <div id="status" class="status">
+            Click a button above to run tests
+        </div>
     </div>
-
+    
     <hr>
-
-    <h2>Results</h2>
+    <h2>Test Results</h2>
     <div id="results">
-        <p>Data from API calls will be displayed here.</p>
+        Test output will be displayed here...
     </div>
-
+    
     <script src="main.js"></script>
+    <script>
+        // Test interface functionality
+        const resultsDiv = document.getElementById('results');
+        const statusDiv = document.getElementById('status');
+        
+        // Store original console.log
+        const originalConsoleLog = console.log;
+        let testOutput = '';
+        
+        // Custom logger that captures output
+        function testLogger(message) {
+            testOutput += message + '\n';
+            resultsDiv.textContent = testOutput;
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+        
+        // Update status display
+        function updateStatus(message, type = '') {
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+        
+        // Clear results
+        function clearResults() {
+            testOutput = '';
+            resultsDiv.textContent = 'Test output will be displayed here...';
+            updateStatus('Results cleared');
+        }
+        
+        // Run the full system test (your original code)
+        function runFullSystemTest() {
+            try {
+                updateStatus('Running full system test...', 'running');
+                testOutput = '';
+                console.log = testLogger;
+                
+                // Check if classes are available
+                if (typeof ProductProperties === 'undefined') {
+                    throw new Error('ProductProperties class not found. Make sure main.js is loaded correctly.');
+                }
+                
+                console.log("--- Inventory Management System Test ---");
+                console.log("--- Initializing Inventory Management System ---");
+                
+                // 1. Create product instances
+                const apple = new ProductProperties("Apple", 0.50, 150);
+                const laptop = new ProductProperties("Laptop", 1200, 10);
+                const soap = new ProductProperties("Soap", 2.00, 50);
+                const milk = new PerishableProductProperties("Milk", 1.50, 40, "2025-09-15");
+                const cheese = new PerishableProductProperties("Cheese", 5.00, 30, "2025-11-20");
+                const oldYogurt = new PerishableProductProperties("Yogurt", 1.00, 20, "2024-03-15");
+                
+                // 2. Create a store and add the products
+                const myStore = new Store();
+                myStore.addProduct(apple);
+                myStore.addProduct(laptop);
+                myStore.addProduct(soap);
+                myStore.addProduct(milk);
+                myStore.addProduct(cheese);
+                myStore.addProduct(oldYogurt);
+
+                console.log("\n--- Inventory Loaded ---");
+                myStore.inventory.forEach(p => console.log(p.toString()));
+                
+                // 3. Print the total inventory value before the discount
+                const initialValue = myStore.getInventoryValue();
+                console.log(`\nTotal Inventory Value (Before Discount): $${initialValue.toFixed(2)}`);
+
+                // 4. Apply a 15% discount
+                console.log("\n--- Applying a 15% discount to all products... ---");
+                ProductProperties.applyDiscount(myStore.inventory, 0.15);
+
+                // 5. Print the total inventory value after the discount
+                const discountedValue = myStore.getInventoryValue();
+                console.log(`Total Inventory Value (After Discount): $${discountedValue.toFixed(2)}`);
+                
+                // 6. Find a specific product and print its details
+                console.log("\n--- Searching for 'Laptop'... ---");
+                const foundProduct = myStore.findProductByName("Laptop");
+
+                if (foundProduct) {
+                    console.log("Product Found!");
+                    console.log(foundProduct.toString());
+                } else {
+                    console.log("Product not found.");
+                }
+
+                console.log("\n--- System Test Complete ---");
+                
+                console.log = originalConsoleLog;
+                updateStatus('✅ Full system test completed successfully!', 'success');
+                
+            } catch (error) {
+                console.log = originalConsoleLog;
+                testLogger(`❌ Error: ${error.message}`);
+                updateStatus(`❌ Test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        // Test just the classes
+        function testClassesOnly() {
+            try {
+                updateStatus('Testing classes...', 'running');
+                testOutput = '';
+                console.log = testLogger;
+                
+                console.log("--- Testing ProductProperties Class ---");
+                const testProduct = new ProductProperties("Test Item", 10.00, 5);
+                console.log(testProduct.toString());
+                console.log(`Total Value: $${testProduct.getTotalValue().toFixed(2)}`);
+                
+                console.log("\n--- Testing PerishableProductProperties Class ---");
+                const testPerishable = new PerishableProductProperties("Test Perishable", 5.00, 3, "2025-12-31");
+                console.log(testPerishable.toString());
+                console.log(`Is Expired: ${testPerishable.isExpired()}`);
+                
+                const expiredItem = new PerishableProductProperties("Expired Item", 3.00, 2, "2024-01-01");
+                console.log(expiredItem.toString());
+                console.log(`Is Expired: ${expiredItem.isExpired()}`);
+                
+                console.log("\n--- Class Tests Complete ---");
+                
+                console.log = originalConsoleLog;
+                updateStatus('✅ Class tests completed successfully!', 'success');
+                
+            } catch (error) {
+                console.log = originalConsoleLog;
+                testLogger(`❌ Error: ${error.message}`);
+                updateStatus(`❌ Class test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        // Test store operations
+        function testStoreOperations() {
+            try {
+                updateStatus('Testing store operations...', 'running');
+                testOutput = '';
+                console.log = testLogger;
+                
+                console.log("--- Testing Store Class ---");
+                const testStore = new Store();
+                
+                // Add some products
+                testStore.addProduct(new ProductProperties("Widget", 5.99, 10));
+                testStore.addProduct(new ProductProperties("Gadget", 15.50, 3));
+                testStore.addProduct(new PerishableProductProperties("Fresh Fruit", 2.99, 20, "2025-09-30"));
+                
+                console.log("\n--- Store Inventory ---");
+                testStore.inventory.forEach(p => console.log(p.toString()));
+                
+                console.log(`\nTotal Inventory Value: $${testStore.getInventoryValue().toFixed(2)}`);
+                
+                console.log("\n--- Testing Product Search ---");
+                const found = testStore.findProductByName("Widget");
+                if (found) {
+                    console.log(`Found: ${found.toString()}`);
+                } else {
+                    console.log("Product not found");
+                }
+                
+                const notFound = testStore.findProductByName("Non-existent");
+                console.log(`Search for 'Non-existent': ${notFound ? 'Found' : 'Not found'}`);
+                
+                console.log("\n--- Store Tests Complete ---");
+                
+                console.log = originalConsoleLog;
+                updateStatus('✅ Store tests completed successfully!', 'success');
+                
+            } catch (error) {
+                console.log = originalConsoleLog;
+                testLogger(`❌ Error: ${error.message}`);
+                updateStatus(`❌ Store test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('runAllBtn').addEventListener('click', runFullSystemTest);
+        document.getElementById('clearBtn').addEventListener('click', clearResults);
+        document.getElementById('testClassesBtn').addEventListener('click', testClassesOnly);
+        document.getElementById('testStoreBtn').addEventListener('click', testStoreOperations);
+        
+        // Check if main.js loaded successfully
+        window.addEventListener('load', () => {
+            if (typeof ProductProperties === 'undefined') {
+                updateStatus('⚠️ Warning: main.js not loaded or classes not found', 'error');
+                testLogger('Error: Could not find ProductProperties class.\nMake sure main.js is in the same directory and contains your class definitions.');
+            } else {
+                updateStatus('✅ Ready to test! main.js loaded successfully');
+            }
+        });
+    </script>
 </body>
 </html>

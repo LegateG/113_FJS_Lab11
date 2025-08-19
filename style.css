@@ -1,107 +1,198 @@
-/* Basic body and container styles */
+/* Inventory Management System Styles */
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    max-width: 800px;
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 2rem;
-    line-height: 1.6;
-    color: dimgray;
-    background: whitesmoke;
+    padding: 20px;
+    background-color: lightgray;
+    color: darkslategray;
 }
 
-h1, h2 {
+h1 {
+    color: darkblue;
+    text-align: center;
+    border-bottom: 2px solid steelblue;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
     color: darkslategray;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
+    margin-top: 0;
+    border-bottom: 1px solid lightsteelblue;
+    padding-bottom: 10px;
+}
+
+.controls {
+    text-align: center;
+    margin: 20px 0;
 }
 
 button {
     background-color: steelblue;
     color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
+    padding: 12px 24px;
     margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: dodgerblue;
+    background-color: darkslateblue;
 }
 
-#putBtn {
-    background-color: darkorange;
+button:disabled {
+    background-color: lightgray;
+    color: gray;
+    cursor: not-allowed;
 }
 
-#putBtn:hover {
-    background-color: orange;
-}
-
-.controls {
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.form-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-input[type="text"], input[type="number"] {
-    padding: 10px;
-    border: 1px solid silver;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-.form-buttons {
-    display: flex;
-    justify-content: flex-start;
-}
-
-#results {
-    background: #fff;
-    border: 1px solid gainsboro;
-    padding: 1.5rem;
-    margin-top: 1.5rem;
-    border-radius: 5px;
-    min-height: 100px;
-    white-space: pre-wrap; /* Preserve formatting */
-    word-wrap: break-word;
-}
-
-.post {
-    border-bottom: 1px solid whitesmoke;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-}
-
-.post:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-}
-
-.post-title {
-    font-weight: bold;
-    color: darkslategrey;
-}
-
-.error {
-    color: red;
-    font-weight: bold;
-}
-
-.success {
-    color: seagreen;
-    font-weight: bold;
+button:active {
+    background-color: navy;
+    transform: translateY(1px);
 }
 
 hr {
-    border: 0;
+    border: none;
     height: 1px;
-    background: gainsboro;
-    margin: 2rem 0;
+    background-color: silver;
+    margin: 30px 0;
+}
+
+#results {
+    background-color: black;
+    color: lightgreen;
+    padding: 20px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    min-height: 200px;
+    border: 2px solid darkgray;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.test-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid lightgray;
+}
+
+.status {
+    text-align: center;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    border: 2px solid;
+}
+
+.status.success {
+    background-color: lightgreen;
+    color: darkgreen;
+    border-color: green;
+}
+
+.status.error {
+    background-color: lightcoral;
+    color: darkred;
+    border-color: red;
+}
+
+.status.running {
+    background-color: lightyellow;
+    color: darkorange;
+    border-color: orange;
+}
+
+.status.warning {
+    background-color: lightgoldenrodyellow;
+    color: darkgoldenrod;
+    border-color: gold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        max-width: 100%;
+    }
+    
+    button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 15px;
+    }
+    
+    .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #results {
+        font-size: 12px;
+        padding: 15px;
+    }
+    
+    .test-section {
+        padding: 15px;
+        margin: 15px 0;
+    }
+}
+
+/* Loading animation */
+.status.running::after {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 10px;
+    border: 2px solid transparent;
+    border-top: 2px solid darkorange;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Hover effects for test sections */
+.test-section:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* Custom scrollbar for results */
+#results::-webkit-scrollbar {
+    width: 8px;
+}
+
+#results::-webkit-scrollbar-track {
+    background: darkgray;
+}
+
+#results::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 4px;
+}
+
+#results::-webkit-scrollbar-thumb:hover {
+    background: silver;
 }
