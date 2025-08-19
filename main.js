@@ -110,6 +110,11 @@ class Store {
         return this.inventory.find(product => product.name === name) ?? null;
     }
 }
-
+// 1. Create product instances
+const apple = new ProductProperties("Apple", 0.50, 150);
+const laptop = new ProductProperties("Laptop", 1200, 10);
+const soap = new ProductProperties("Soap", 2.00, 50);
+const milk = new PerishableProductProperties("Milk", 1.50, 40, "2025-09-15");
+const cheese = new PerishableProductProperties("Cheese", 5.00, 30, "2025-11-20");
 // --- PART 5: Testing Script ---
 console.log("--- Initializing Inventory Management System ---");
