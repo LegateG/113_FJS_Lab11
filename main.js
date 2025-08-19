@@ -124,6 +124,7 @@ myStore.addProduct(laptop);
 myStore.addProduct(soap);
 myStore.addProduct(milk);
 myStore.addProduct(cheese);
+myStore.addProduct(oldYogurt);
 
 console.log("\n--- Inventory Loaded ---");
 myStore.inventory.forEach(p => console.log(p.toString()));
