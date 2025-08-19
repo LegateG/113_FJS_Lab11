@@ -22,4 +22,14 @@ class ProductProperties {
     toString() {
         return `Product: ${this.name}, Price: $${this.price.toFixed(2)}, Quantity: ${this.quantity}`;
     }
+    /**
+     * A static method to apply a discount to an array of products.
+     * @param {Array<ProductProperties>} products - An array of Product objects.
+     * @param {number} discount - The discount percentage (e.g., 0.1 for 10%).
+     */
+    static applyDiscount(products, discount) {
+        products.forEach(product => {
+            product.price -= product.price * discount;
+        });
+    }
 }
