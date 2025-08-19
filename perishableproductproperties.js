@@ -10,11 +10,17 @@ class PerishableProductProperties extends ProductProperties {
         this.expirationDate = expirationDate;
     }
     /**
-     * Overrides the parent's toString method to include the expiration date.
+     * Overrides the parent's toString method to include the expiration date
+     * and an expired status message if applicable.
      * @returns {string} A formatted string with perishable product details.
      */
     toString() {
-        return `${super.toString()}, Expiration Date: ${this.expirationDate}`;
+        // Get the base string from the parent class.
+        const baseString = super.toString();
+        // Check if the product is expired using our new method.
+        const expiredTag = this.isExpired() ? " (EXPIRED)" : "";
+        // Append the expiration date and the expired tag (if any).
+        return `${baseString}, Expiration Date: ${this.expirationDate}${expiredTag}`;
     }
         /**
      * Checks if the product is expired based on the current date.
