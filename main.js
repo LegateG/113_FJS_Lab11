@@ -139,5 +139,17 @@ ProductProperties.applyDiscount(myStore.inventory, 0.15);
 // 5. Print the total inventory value after the discount
 const discountedValue = myStore.getInventoryValue();
 console.log(`Total Inventory Value (After Discount): $${discountedValue.toFixed(2)}`);
+// 6. Find a specific product and print its details
+console.log("\n--- Searching for 'Laptop'... ---");
+const foundProduct = myStore.findProductByName("Laptop");
+
+if (foundProduct) {
+    console.log("Product Found!");
+    console.log(foundProduct.toString());
+} else {
+    console.log("Product not found.");
+}
+
+console.log("\n--- System Test Complete ---");
 // --- PART 5: Testing Script ---
 console.log("--- Initializing Inventory Management System ---");
