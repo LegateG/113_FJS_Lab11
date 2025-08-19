@@ -128,5 +128,16 @@ myStore.addProduct(oldYogurt);
 
 console.log("\n--- Inventory Loaded ---");
 myStore.inventory.forEach(p => console.log(p.toString()));
+// 3. Print the total inventory value before the discount
+const initialValue = myStore.getInventoryValue();
+console.log(`\nTotal Inventory Value (Before Discount): $${initialValue.toFixed(2)}`);
+
+// 4. Apply a 15% discount
+console.log("\n--- Applying a 15% discount to all products... ---");
+ProductProperties.applyDiscount(myStore.inventory, 0.15);
+
+// 5. Print the total inventory value after the discount
+const discountedValue = myStore.getInventoryValue();
+console.log(`Total Inventory Value (After Discount): $${discountedValue.toFixed(2)}`);
 // --- PART 5: Testing Script ---
 console.log("--- Initializing Inventory Management System ---");
