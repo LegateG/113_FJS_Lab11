@@ -116,5 +116,6 @@ const laptop = new ProductProperties("Laptop", 1200, 10);
 const soap = new ProductProperties("Soap", 2.00, 50);
 const milk = new PerishableProductProperties("Milk", 1.50, 40, "2025-09-15");
 const cheese = new PerishableProductProperties("Cheese", 5.00, 30, "2025-11-20");
+const oldYogurt = new PerishableProductProperties("Yogurt", 1.00, 20, "2024-03-15");
 // --- PART 5: Testing Script ---
 console.log("--- Initializing Inventory Management System ---");
